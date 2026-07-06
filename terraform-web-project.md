@@ -87,4 +87,50 @@ We DO NOT commit:
 .terraform/
 terraform.tfstate
 
-so we created .gitignore
+
+dir -force
+git status
+git agg .
+git add .
+git status
+git commit -m "Initial Terraform website deployment"
+git status
+git remote -v
+git remote add origin git@github.com:LuckyAWSadmin/LuckyAWSadmin.git
+git remote -v
+git remote remove origin
+git remote -v
+git remote add origin git@github.com:LuckyAWSadmin/terraform-web-project.git
+clear
+git remote -v
+ssh -T git@github.com
+dir $HOME\.ssh
+ssh-keygen -t ed25519 -C "lucky.patil92@gmail.com"
+Get-Content $HOME\.ssh\id_ed25519.pub
+ssh -T git@github.com
+clear
+ssh -T git@github.com
+Get-Content $HOME\.ssh\id_ed25519.pub
+git status
+clear
+git status
+dir
+clear
+git status
+git log --oneline
+git push -u origin master
+git pull origin master
+vim .\variables.tf
+git status
+git add --all
+git status
+git commit -m "remove profile variables from providers"
+git status
+git push origin master
+
+
+
+
+
+
+
