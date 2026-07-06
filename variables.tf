@@ -6,7 +6,7 @@ variable "instance_type" {
   default = "t3.micro"
 }
 
-variable "profile" {
-    default = "sandbox"
+#variable "profile" {
+ #   default = "sandbox"
   
 }
