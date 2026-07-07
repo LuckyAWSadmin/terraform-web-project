@@ -4,7 +4,7 @@ provider "aws" {
   
   }
 
-# Latest Amazon Linux
+######### Latest Amazon Linux###########
 
 data "aws_ami" "amazon_linux" {
 
@@ -18,6 +18,19 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+##### Data Source for MyIP#######
+data "http" "my_ip" {
+  url = "https://checkip.amazonaws.com"
+ 
+}
+
+locals {
+  my_ip = "${chomp(data.http.my_ip.response_body)}/32"
+}
+
+
+
+#################### Security Group ################
 resource "aws_security_group" "web_sg" {
 
   name = "web-sg"
@@ -26,14 +39,14 @@ resource "aws_security_group" "web_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["153.72.169.232/32"]
+    cidr_blocks = ["149.173.0.0/16/16"]
   }
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["153.72.169.232/32"]
+    cidr_blocks = ["149.173.0.0/16"]
   }
 
   egress {
@@ -43,6 +56,21 @@ resource "aws_security_group" "web_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+
+######## SG Rules ######
+resource "aws_security_group_rule" "ssh" {
+  type              = "ingress"
+  security_group_id = aws_security_group.web_sg.id
+
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+
+  cidr_blocks = [local.my_ip]
+}
+
+########  Ec2 Instance ###########
 
 resource "aws_instance" "web" {
 
