@@ -23,8 +23,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Verify AWS Login
-        run: aws sts get-caller-identity
+      - name: Run shell script
+        run: bash scripts/check-aws.sh
     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
